@@ -30,6 +30,9 @@ function RecipeDetail() {
           <div className="recipe_header flex">
             <div>
               <img src={recipe.image} alt="" />
+              <div>
+                <strong>Add My Recipe Book</strong>
+              </div>
             </div>
             <div>
               <h2>{recipe.title}</h2>
