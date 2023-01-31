@@ -333,6 +333,43 @@ input:focus {
   margin-bottom: 10px;
 }
 
+.addRecipeBook {
+  cursor: pointer;
+}
+.addRecipeBook:hover {
+  color: green;
+}
+
+.recipeBook {
+  margin-top: 10px;
+  padding-bottom: 50px;
+}
+
+.recipeBook .listRecipe {
+  margin-top: 10px;
+  list-style: none;
+  text-align: left;
+}
+
+.recipeBook .listRecipe li {
+  padding: 5px;
+  cursor: pointer;
+}
+.recipeBook .listRecipe li:hover {
+  background-color: #d4d4d4;
+}
+
+.recipeBookLandingPage {
+  position: absolute;
+  top: 20px;
+  right: 50px;
+  color: white;
+  cursor: pointer;
+}
+.recipeBookLandingPage a {
+  text-decoration: none;
+  color: white;
+}
 /*loading*/
 .loader {
   border: 16px solid #f3f3f3;

@@ -2,6 +2,8 @@ import companyLogo from "../assets/logo.png";
 import { useState, useEffect } from "react";
 import { useFetchRecipes } from "../contexts/RecipesContext";
 import { Link } from "react-router-dom";
+import { useLocalStroge } from "../cusromHook/useLocalStroge";
+import { FaBook } from "react-icons/fa";
 
 import { useNotify } from "../cusromHook/useNotify";
 
@@ -14,6 +16,8 @@ export const LandingPage = () => {
   const fetchRecipes = useFetchRecipes();
 
   const { notifyError, ToastContainer } = useNotify();
+
+  const [recipeBook, setRecipeBook] = useLocalStroge("recipeBook", []);
 
   useEffect(() => {
     const getSuggestions = async () => {
@@ -73,6 +77,22 @@ export const LandingPage = () => {
           </div>
         </div>
       </div>
+      {recipeBook.length > 0 && (
+        <div className="recipeBookLandingPage">
+          <Link to={"/myRecipeBook"}>
+            <FaBook
+              style={{
+                color: "white",
+                cursor: "pointer",
+                marginRight: "5px",
+                fontSize: "20px",
+              }}
+            />{" "}
+            <span>My Recipe Book</span>
+          </Link>
+        </div>
+      )}
+
       <div className="container flex">
         <div className="content">
           <h1>Let's Find Recipe by Ingredients</h1>

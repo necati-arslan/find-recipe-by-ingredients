@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { FaBook } from "react-icons/fa";
+import { useLocalStroge } from "../cusromHook/useLocalStroge";
+import { useNotify } from "../cusromHook/useNotify";
 
 function RecipeDetail() {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
+  const [recipeBook, setRecipeBook] = useLocalStroge("recipeBook", []);
+
+  const { notifySuccess, ToastContainer } = useNotify();
 
   useEffect(() => {
     const getRecipeDetail = async () => {
@@ -23,6 +29,15 @@ function RecipeDetail() {
     return res;
   };
 
+  const addRecipeBook = () => {
+    setRecipeBook([
+      ...recipeBook.filter((r) => r.recipeId !== recipe.id),
+      { recipeId: recipe.id, title: recipe.title },
+    ]);
+
+    notifySuccess(`${recipe.title} added your recipe book`);
+  };
+
   return (
     <section className="detail_recipe">
       <div className="container">
@@ -33,6 +48,17 @@ function RecipeDetail() {
             </div>
             <div>
               <h2>{recipe.title}</h2>
+              <div onClick={() => addRecipeBook()} className="addRecipeBook">
+                <FaBook
+                  style={{
+                    color: "green",
+                    cursor: "pointer",
+                    marginRight: "5px",
+                    fontSize: "20px",
+                  }}
+                />
+                <strong>Add My Recipe Book</strong>
+              </div>
               <hr />
               <div className="nutrient">
                 <h3>Nutrient</h3>
@@ -123,6 +149,7 @@ function RecipeDetail() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 }
