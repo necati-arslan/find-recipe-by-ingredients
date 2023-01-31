@@ -12,6 +12,8 @@ export const LandingPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [dropdownMenu, setDropdownMenu] = useState(false);
+  const [afterQuery, setAfterQuery] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const fetchRecipes = useFetchRecipes();
 
@@ -64,11 +66,14 @@ export const LandingPage = () => {
       notifyError("You must write atleast  one ingredient");
       return;
     }
+    setLoading(true);
     fetchRecipes(selectedIngs);
+    setAfterQuery(true);
+    setLoading(false);
   };
 
   return (
-    <section className="welcomePage">
+    <section className="welcomePage" style={{ height: afterQuery && "auto" }}>
       <div className="logo">
         <div className="flex">
           <img src={companyLogo} alt="" />
@@ -94,7 +99,7 @@ export const LandingPage = () => {
       )}
 
       <div className="container flex">
-        <div className="content">
+        <div className={`content ${afterQuery && "content_after_query"}`}>
           <h1>Let's Find Recipe by Ingredients</h1>
           <div className="flex autocomplete">
             <input
@@ -145,6 +150,7 @@ export const LandingPage = () => {
         </div>
       </div>
       <ToastContainer />
+      {loading && <div className="loader"></div>}
     </section>
   );
 };

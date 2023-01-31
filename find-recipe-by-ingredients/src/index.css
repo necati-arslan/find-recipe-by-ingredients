@@ -370,6 +370,29 @@ input:focus {
   text-decoration: none;
   color: white;
 }
+
+.pagination {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.pagination li {
+  padding: 5px 10px;
+  border: 1px solid green;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.pagination li.active {
+  background-color: #0e550e;
+}
+
+.pagination li:hover {
+  background-color: #a6a2a2;
+}
 /*loading*/
 .loader {
   border: 16px solid #f3f3f3;

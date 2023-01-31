@@ -9,7 +9,7 @@ export const RecipesProvider = ({ children }) => {
     const res = await fetch(
       `https://api.spoonacular.com/recipes/findByIngredients?apiKey=e178d8abd3d341d5b8d1f33c5f024a7f&ingredients=${[
         ...selectedIngs,
-      ]}&number=10`
+      ]}&number=100`
     );
     const data = await res.json();
     setRecipes(data);
