@@ -1,5 +1,7 @@
 import companyLogo from "../assets/logo.png";
 import { useState, useEffect } from "react";
+import { useFetchRecipes } from "../contexts/RecipesContext";
+import { Link } from "react-router-dom";
 
 import { useNotify } from "../cusromHook/useNotify";
 
@@ -9,13 +11,14 @@ export const LandingPage = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [dropdownMenu, setDropdownMenu] = useState(false);
 
+  const fetchRecipes = useFetchRecipes();
+
   const { notifyError, ToastContainer } = useNotify();
 
   useEffect(() => {
     const getSuggestions = async () => {
       const data = await fetchIngredientsToSelect();
       setSuggestions(data);
-      console.log(data);
     };
     if (inputValue !== "") {
       getSuggestions();
@@ -36,16 +39,28 @@ export const LandingPage = () => {
   };
 
   const handleSelectedIngredent = () => {
+    if (inputValue === "") {
+      notifyError("You must write atleast  one ingredient");
+      return;
+    }
+
     setSelectedIngs([...selectedIngs, inputValue]);
     setInputValue("");
     setSuggestions([]);
-    notifyError("hooops");
   };
 
   const selectIngFromAutoComplete = (name) => {
     setSuggestions([]);
     setInputValue(name);
     setDropdownMenu(false);
+  };
+
+  const getRecipes = () => {
+    if (selectedIngs.length === 0) {
+      notifyError("You must write atleast  one ingredient");
+      return;
+    }
+    fetchRecipes(selectedIngs);
   };
 
   return (
@@ -92,7 +107,7 @@ export const LandingPage = () => {
                 ))}
             </div>
           </div>
-          <div id="selectedIngredient" className="selected_Ingredient flex">
+          <div className="selected_Ingredient flex">
             {selectedIngs.map((ing, index) => (
               <div key={index}>
                 <div className="cancel" onClick={() => deleteSelectedIng(ing)}>
@@ -102,9 +117,11 @@ export const LandingPage = () => {
               </div>
             ))}
           </div>
-          <button id="getRecipes" className="btn-red">
-            Find
-          </button>
+          <Link to={"/"}>
+            <button className="btn-red" onClick={() => getRecipes()}>
+              Find
+            </button>
+          </Link>
         </div>
       </div>
       <ToastContainer />
